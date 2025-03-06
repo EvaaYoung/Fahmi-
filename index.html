@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dino Game</title>
+    <style>
+        body {
+            text-align: center;
+        }
+        .game-container {
+            width: 600px;
+            height: 200px;
+            border: 2px solid black;
+            margin: auto;
+            position: relative;
+            overflow: hidden;
+        }
+        .dino {
+            width: 40px;
+            height: 40px;
+            background: green;
+            position: absolute;
+            bottom: 0;
+        }
+        .obstacle {
+            width: 20px;
+            height: 40px;
+            background: red;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            animation: moveObstacle 2s infinite linear;
+        }
+        @keyframes moveObstacle {
+            from { right: 0; }
+            to { right: 100%; }
+        }
+        .jump {
+            animation: jump 0.5s ease-out;
+        }
+        @keyframes jump {
+            0% { bottom: 0; }
+            50% { bottom: 100px; }
+            100% { bottom: 0; }
+        }
+    </style>
+</head>
+<body>
+    <h1>Dino Game BY Fahmi</h1>
+    <div class="game-container">
+        <div class="dino" id="dino"></div>
+        <div class="obstacle" id="obstacle"></div>
+    </div>
+    <p>Press SPACE to Jump</p>
+    <script>
+        const dino = document.getElementById("dino");
+        document.addEventListener("keydown", function(event) {
+            if (event.code === "Space") {
+                if (!dino.classList.contains("jump")) {
+                    dino.classList.add("jump");
+                    setTimeout(() => dino.classList.remove("jump"), 500);
+                }
+            }
+        });
+
+        function checkCollision() {
+            let dinoRect = dino.getBoundingClientRect();
+            let obstacleRect = document.getElementById("obstacle").getBoundingClientRect();
+            if (
+                dinoRect.right > obstacleRect.left &&
+                dinoRect.left < obstacleRect.right &&
+                dinoRect.bottom > obstacleRect.top
+            ) {
+                alert("Game Over!");
+                location.reload();
+            }
+        }
+        setInterval(checkCollision, 50);
+    </script>
+</body>
+</html>
