@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dino Game</title>
+    <title>Dinobyfahmk</title>
     <style>
         body {
             text-align: center;
@@ -44,25 +44,42 @@
             50% { bottom: 100px; }
             100% { bottom: 0; }
         }
+        .jump-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
-    <h1>Dino Game BY Fahmi</h1>
-    <div class="game-container">
+    <h1>Dinobyfahmi</h1>
+    <div class="game-container" id="game-container">
         <div class="dino" id="dino"></div>
         <div class="obstacle" id="obstacle"></div>
     </div>
-    <p>Press SPACE to Jump</p>
+    <p>Press SPACE or TAP to Jump</p>
+    <button class="jump-button" id="jumpButton">Jump</button>
     <script>
         const dino = document.getElementById("dino");
+        const jumpButton = document.getElementById("jumpButton");
+        const gameContainer = document.getElementById("game-container");
+
+        function jump() {
+            if (!dino.classList.contains("jump")) {
+                dino.classList.add("jump");
+                setTimeout(() => dino.classList.remove("jump"), 500);
+            }
+        }
+
         document.addEventListener("keydown", function(event) {
             if (event.code === "Space") {
-                if (!dino.classList.contains("jump")) {
-                    dino.classList.add("jump");
-                    setTimeout(() => dino.classList.remove("jump"), 500);
-                }
+                jump();
             }
         });
+
+        jumpButton.addEventListener("click", jump);
+        gameContainer.addEventListener("click", jump);
 
         function checkCollision() {
             let dinoRect = dino.getBoundingClientRect();
